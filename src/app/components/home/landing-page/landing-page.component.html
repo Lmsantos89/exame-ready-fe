@@ -1,0 +1,59 @@
+<div class="landing-page">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Prepare for Your Next Certification Exam</h1>
+        <p>Practice with realistic mock exams and boost your confidence for certification success</p>
+        <div class="cta-buttons">
+          <a routerLink="/auth/register" class="btn btn-primary">Get Started</a>
+          <a routerLink="/exams" class="btn btn-outline">Explore Exams</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="assets/images/hero-image.svg" alt="Certification Exam Preparation">
+      </div>
+    </div>
+  </section>
+  
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <h2>Why Choose ExamReady?</h2>
+      <div class="features-grid">
+        @for (feature of features; track feature.title) {
+          <div class="feature-card">
+            <div class="feature-icon">
+              <img [src]="feature.icon" [alt]="feature.title">
+            </div>
+            <h3>{{ feature.title }}</h3>
+            <p>{{ feature.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+  
+  <!-- Technologies Section -->
+  <section class="technologies">
+    <div class="container">
+      <h2>Available Technologies</h2>
+      <div class="tech-grid">
+        @for (tech of technologies; track tech.name) {
+          <div class="tech-card">
+            <img [src]="tech.icon" [alt]="tech.name">
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Ace Your Next Certification?</h2>
+      <p>Join thousands of professionals who have successfully prepared with ExamReady</p>
+      <a routerLink="/auth/register" class="btn btn-primary">Sign Up Now</a>
+    </div>
+  </section>
+</div>

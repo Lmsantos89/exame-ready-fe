@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="250" fill="#007bff" />
+  
+  <!-- Document/Exam paper -->
+  <rect x="130" y="100" width="252" height="312" rx="15" fill="#ffffff" />
+  <rect x="160" y="140" width="192" height="20" rx="5" fill="#e0e0e0" />
+  <rect x="160" y="180" width="192" height="20" rx="5" fill="#e0e0e0" />
+  <rect x="160" y="220" width="120" height="20" rx="5" fill="#e0e0e0" />
+  
+  <!-- Checkmark -->
+  <path d="M160 300 L190 330 L240 260" stroke="#4CAF50" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- GenAI Sparkle Symbols based on AI.png -->
+  <g transform="translate(280, 290)">
+    <!-- Large sparkle -->
+    <g transform="scale(1.2)">
+      <path d="M0,-20 L5,0 L0,20 L-5,0 Z" fill="#007bff" />
+      <path d="M-20,0 L0,-5 L20,0 L0,5 Z" fill="#007bff" />
+    </g>
+    
+    <!-- Medium sparkle -->
+    <g transform="translate(-45, 25) scale(0.9)">
+      <path d="M0,-20 L5,0 L0,20 L-5,0 Z" fill="#007bff" />
+      <path d="M-20,0 L0,-5 L20,0 L0,5 Z" fill="#007bff" />
+    </g>
+    
+    <!-- Small sparkle -->
+    <g transform="translate(45, 25) scale(0.7)">
+      <path d="M0,-20 L5,0 L0,20 L-5,0 Z" fill="#007bff" />
+      <path d="M-20,0 L0,-5 L20,0 L0,5 Z" fill="#007bff" />
+    </g>
+  </g>
+  
+  <!-- Subtle glow effect -->
+  <circle cx="280" cy="290" r="70" fill="url(#glow)" />
+  
+  <!-- Gradient definitions -->
+  <defs>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5" fx="0.5" fy="0.5">
+      <stop offset="0%" stop-color="#007bff" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#007bff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+</svg>

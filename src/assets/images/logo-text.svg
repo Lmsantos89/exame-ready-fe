@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200">
+  <!-- ExamReady Text -->
+  <text x="20" y="130" font-family="Arial, sans-serif" font-weight="bold" font-size="90" fill="#333333">
+    Exam<tspan fill="#007bff">Ready</tspan>
+  </text>
+  
+  <!-- GenAI Sparkle Symbols based on AI.png -->
+  <g transform="translate(620, 70)">
+    <!-- Large sparkle -->
+    <g transform="scale(1.5)">
+      <path d="M0,-20 L5,0 L0,20 L-5,0 Z" fill="#007bff" />
+      <path d="M-20,0 L0,-5 L20,0 L0,5 Z" fill="#007bff" />
+    </g>
+    
+    <!-- Medium sparkle -->
+    <g transform="translate(-40, 25) scale(1.0)">
+      <path d="M0,-20 L5,0 L0,20 L-5,0 Z" fill="#007bff" />
+      <path d="M-20,0 L0,-5 L20,0 L0,5 Z" fill="#007bff" />
+    </g>
+    
+    <!-- Small sparkle -->
+    <g transform="translate(40, 25) scale(0.8)">
+      <path d="M0,-20 L5,0 L0,20 L-5,0 Z" fill="#007bff" />
+      <path d="M-20,0 L0,-5 L20,0 L0,5 Z" fill="#007bff" />
+    </g>
+  </g>
+</svg>

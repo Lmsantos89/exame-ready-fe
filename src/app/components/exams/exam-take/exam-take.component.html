@@ -1,0 +1,97 @@
+<div class="exam-take-container">
+  @if (loading) {
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Loading exam...</p>
+    </div>
+  } @else if (error) {
+    <div class="error-message">
+      <p>{{ error }}</p>
+      <button class="btn btn-primary" (click)="loadExam()">Try Again</button>
+    </div>
+  } @else if (examSubmitted) {
+    <div class="exam-submitted">
+      <h2>Submitting Your Exam</h2>
+      <div class="spinner"></div>
+      <p>Please wait while we process your answers...</p>
+    </div>
+  } @else {
+    <div class="exam-header">
+      <div class="exam-info">
+        <h1>{{ exam?.title }}</h1>
+        <div class="exam-progress">
+          <span>Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}</span>
+          <span>{{ getAnsweredQuestionsCount() }} of {{ questions.length }} answered</span>
+        </div>
+      </div>
+      <div class="exam-timer" [ngClass]="{'warning': timeRemaining < 300}">
+        <span>Time Remaining: {{ formatTime(timeRemaining) }}</span>
+      </div>
+    </div>
+    
+    <div class="exam-content">
+      <div class="question-sidebar">
+        <div class="question-navigation">
+          <h3>Questions</h3>
+          <div class="question-buttons">
+            @for (question of questions; track question.id; let i = $index) {
+              <button 
+                class="question-button" 
+                [class.active]="i === currentQuestionIndex"
+                [class.answered]="isQuestionAnswered(question.id)"
+                (click)="goToQuestion(i)"
+              >
+                {{ i + 1 }}
+              </button>
+            }
+          </div>
+        </div>
+        
+        <div class="exam-actions">
+          <button class="btn btn-primary" (click)="confirmSubmit()">Submit Exam</button>
+        </div>
+      </div>
+      
+      <div class="question-container">
+        @if (getCurrentQuestion()) {
+          <div class="question">
+            <h2>Question {{ currentQuestionIndex + 1 }}</h2>
+            <p class="question-text">{{ getCurrentQuestion()?.text }}</p>
+            
+            <div class="options">
+              @for (option of getCurrentQuestion()?.options; track option.id) {
+                <div 
+                  class="option" 
+                  [class.selected]="isAnswerSelected(getCurrentQuestion()?.id || '', option.id)"
+                  (click)="selectAnswer(getCurrentQuestion()?.id || '', option.id)"
+                >
+                  <div class="option-selector">
+                    <div class="option-indicator"></div>
+                  </div>
+                  <div class="option-text">{{ option.text }}</div>
+                </div>
+              }
+            </div>
+            
+            <div class="question-navigation-buttons">
+              <button 
+                class="btn btn-outline" 
+                [disabled]="currentQuestionIndex === 0"
+                (click)="previousQuestion()"
+              >
+                Previous
+              </button>
+              <button 
+                class="btn btn-outline" 
+                [disabled]="currentQuestionIndex === questions.length - 1"
+                (click)="nextQuestion()"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

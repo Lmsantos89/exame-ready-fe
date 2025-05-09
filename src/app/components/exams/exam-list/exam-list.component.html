@@ -1,0 +1,64 @@
+<div class="exam-list-container">
+  <div class="container">
+    <div class="exam-list-header">
+      <h1>{{ technology | titlecase }} {{ level | titlecase }} Exams</h1>
+      <p>Select an exam to view details and start practicing</p>
+    </div>
+    
+    @if (loading) {
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Loading exams...</p>
+      </div>
+    } @else if (error) {
+      <div class="error-message">
+        <p>{{ error }}</p>
+        <button class="btn btn-primary" (click)="loadExams()">Try Again</button>
+      </div>
+    } @else if (exams.length === 0) {
+      <div class="no-exams">
+        <p>No exams found for {{ technology | titlecase }} {{ level | titlecase }}.</p>
+      </div>
+    } @else {
+      <div class="exam-grid">
+        @for (exam of exams; track exam.id) {
+          <div class="exam-card">
+            <div class="exam-card-header">
+              <h3>{{ exam.title }}</h3>
+              <span class="exam-level" [ngClass]="exam.level.toLowerCase()">{{ exam.level }}</span>
+            </div>
+            <div class="exam-card-body">
+              <p>{{ exam.description }}</p>
+              <div class="exam-details">
+                <div class="detail-item">
+                  <span class="label">Questions:</span>
+                  <span class="value">{{ exam.totalQuestions }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Duration:</span>
+                  <span class="value">{{ exam.duration }} min</span>
+                </div>
+                <div class="detail-item">
+                  <span class="label">Passing Score:</span>
+                  <span class="value">{{ exam.passingScore }}%</span>
+                </div>
+              </div>
+            </div>
+            <div class="exam-card-footer">
+              <a [routerLink]="['/exams', exam.id]" class="btn btn-primary">View Exam</a>
+              @if (exam.isGenAI) {
+                <span class="ai-badge">AI Generated</span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+      
+      <div class="generate-exam">
+        <h2>Need a custom exam?</h2>
+        <p>Generate a new {{ technology | titlecase }} {{ level | titlecase }} exam with AI</p>
+        <button class="btn btn-secondary">Generate AI Exam</button>
+      </div>
+    }
+  </div>
+</div>

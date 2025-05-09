@@ -1,0 +1,96 @@
+<div class="exam-detail-container">
+  <div class="container">
+    @if (loading) {
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Loading exam details...</p>
+      </div>
+    } @else if (error) {
+      <div class="error-message">
+        <p>{{ error }}</p>
+        <button class="btn btn-primary" (click)="loadExam()">Try Again</button>
+      </div>
+    } @else if (exam) {
+      <div class="exam-detail">
+        <div class="exam-header">
+          <div class="exam-title">
+            <h1>{{ exam.title }}</h1>
+            <div class="exam-badges">
+              <span class="exam-level" [ngClass]="exam.level.toLowerCase()">{{ exam.level }}</span>
+              @if (exam.isGenAI) {
+                <span class="ai-badge">AI Generated</span>
+              }
+            </div>
+          </div>
+          <div class="exam-actions">
+            <button class="btn btn-primary" (click)="startExam()">
+              @if (isAuthenticated()) {
+                Start Exam
+              } @else {
+                Sign In to Start
+              }
+            </button>
+          </div>
+        </div>
+        
+        <div class="exam-info">
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="icon-questions"></i>
+            </div>
+            <div class="info-content">
+              <span class="info-label">Questions</span>
+              <span class="info-value">{{ exam.totalQuestions }}</span>
+            </div>
+          </div>
+          
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="icon-time"></i>
+            </div>
+            <div class="info-content">
+              <span class="info-label">Duration</span>
+              <span class="info-value">{{ exam.duration }} minutes</span>
+            </div>
+          </div>
+          
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="icon-score"></i>
+            </div>
+            <div class="info-content">
+              <span class="info-label">Passing Score</span>
+              <span class="info-value">{{ exam.passingScore }}%</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="exam-description">
+          <h2>About this Exam</h2>
+          <p>{{ exam.description }}</p>
+        </div>
+        
+        <div class="exam-instructions">
+          <h2>Instructions</h2>
+          <ul>
+            <li>This exam contains {{ exam.totalQuestions }} multiple-choice questions.</li>
+            <li>You have {{ exam.duration }} minutes to complete the exam.</li>
+            <li>You need to score at least {{ exam.passingScore }}% to pass.</li>
+            <li>You can review your answers before submitting.</li>
+            <li>Results will be shown immediately after submission.</li>
+          </ul>
+        </div>
+        
+        @if (!isAuthenticated()) {
+          <div class="auth-notice">
+            <p>You need to be signed in to take this exam.</p>
+            <div class="auth-buttons">
+              <a routerLink="/auth/login" [queryParams]="{returnUrl: '/exams/' + examId}" class="btn btn-primary">Sign In</a>
+              <a routerLink="/auth/register" class="btn btn-outline">Create Account</a>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
