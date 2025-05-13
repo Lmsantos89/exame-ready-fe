@@ -30,7 +30,7 @@ pipeline {
         stage('Deploy to S3') {
             steps {
                 // Configure AWS credentials
-                withAWS(region: env.AWS_REGION, credentials: 'aws-credentials') {
+                withAWS(region: env.AWS_REGION, credentials: 'jenkins-deployment-user') {
                     // Sync the build directory with the S3 bucket
                     s3Upload(
                         bucket: env.S3_BUCKET,
