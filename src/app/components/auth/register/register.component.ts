@@ -16,11 +16,46 @@ export class RegisterComponent {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+
+  
+  // Password validator functions
+  uppercaseValidator(control: any) {
+    if (!control.value) return null;
+    const value = control.value;
+    if (!/[A-Z]/.test(value)) {
+      return { uppercase: true };
+    }
+    return null;
+  }
+  
+  numberValidator(control: any) {
+    if (!control.value) return null;
+    const value = control.value;
+    if (!/[0-9]/.test(value)) {
+      return { number: true };
+    }
+    return null;
+  }
+  
+  specialCharValidator(control: any) {
+    if (!control.value) return null;
+    const value = control.value;
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+      return { specialChar: true };
+    }
+    return null;
+  }
   
   registerForm: FormGroup = this.fb.group({
     username: ['', [Validators.required, Validators.minLength(3)]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
+    password: ['', [
+      Validators.required, 
+      Validators.minLength(8),
+      this.uppercaseValidator,
+      this.numberValidator,
+      this.specialCharValidator
+    ]],
     confirmPassword: ['', [Validators.required]]
   }, { validators: this.passwordMatchValidator });
   
