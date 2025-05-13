@@ -1,44 +1,45 @@
-<nav class="navbar">
-  <div class="navbar-container">
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm">
+  <div class="container">
     <!-- Logo -->
-    <div class="left-section">
-      <a routerLink="/" class="logo">
-        <img src="assets/images/logo-text.svg" alt="ExamReady Logo" class="logo-image">
-      </a>
+    <a routerLink="/" class="navbar-brand">
+      <img src="assets/images/logo-text.svg" alt="ExamReady Logo" height="40">
+    </a>
+    
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- Navbar Content -->
+    <div class="collapse navbar-collapse" id="navbarContent" [class.show]="isMenuOpen">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Exams Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" (click)="toggleTechDropdown()" aria-expanded="false">
+            Exams
+          </a>
+          <ul class="dropdown-menu" [class.show]="isTechDropdownOpen">
+            <li>
+              <span class="dropdown-item-text fw-bold">Angular</span>
+              <ul class="list-unstyled ps-3">
+                <li><a class="dropdown-item" routerLink="/exams/angular/junior">Junior</a></li>
+                <li><a class="dropdown-item" routerLink="/exams/angular/intermediate">Intermediate</a></li>
+                <li><a class="dropdown-item" routerLink="/exams/angular/senior">Senior</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
       
-      <!-- Exams Button -->
-      <div class="dropdown">
-        <button class="btn btn-nav" (click)="toggleTechDropdown()">
-          Exams <i class="arrow-down"></i>
-        </button>
-        <div class="dropdown-menu" [class.show]="isTechDropdownOpen">
-          <div class="dropdown-item">
-            <span class="tech-name">Angular</span>
-            <div class="level-links">
-              <a routerLink="/exams/angular/junior">Junior</a>
-              <a routerLink="/exams/angular/intermediate">Intermediate</a>
-              <a routerLink="/exams/angular/senior">Senior</a>
-            </div>
-          </div>
-        </div>
+      <!-- Auth Buttons -->
+      <div class="d-flex">
+        @if (authService.isAuthenticated()) {
+          <button class="btn btn-outline-primary" (click)="signOut()">Sign Out</button>
+        } @else {
+          <a routerLink="/auth/login" class="btn btn-outline-primary me-2">Sign In</a>
+          <a routerLink="/auth/register" class="btn btn-primary">Sign Up</a>
+        }
       </div>
     </div>
-    
-    <!-- Auth Buttons -->
-    <div class="auth-buttons">
-      @if (authService.isAuthenticated()) {
-        <button class="btn btn-outline" (click)="signOut()">Sign Out</button>
-      } @else {
-        <a routerLink="/auth/login" class="btn btn-outline">Sign In</a>
-        <a routerLink="/auth/register" class="btn btn-primary">Sign Up</a>
-      }
-    </div>
-    
-    <!-- Mobile Menu Toggle -->
-    <button class="menu-toggle" (click)="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
   </div>
 </nav>
