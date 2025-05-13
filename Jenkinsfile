@@ -23,7 +23,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Build for staging environment
-                sh 'npm run build -- --configuration=staging'
+                sh 'npm run build -- --configuration=staging --verbose'
             }
         }
         
