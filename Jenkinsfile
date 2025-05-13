@@ -37,7 +37,7 @@ pipeline {
                         path: '/',
                         includePathPattern: '**/*',
                         workingDir: 'dist/exam-ready/browser',
-                        acl: 'public-read'
+                        acl: 'PublicRead'
                     )
                 }
             }
