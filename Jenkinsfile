@@ -31,12 +31,15 @@ pipeline {
             steps {
                 // Configure AWS credentials
                 withAWS(region: env.AWS_REGION, credentials: 'jenkins-deployment-user') {
+                    // List build directory contents for debugging
+                    sh 'find dist -type f | sort'
+                    
                     // Sync the build directory with the S3 bucket
                     s3Upload(
                         bucket: env.S3_BUCKET,
                         path: '/',
                         includePathPattern: '**/*',
-                        workingDir: 'dist/exam-ready/browser',
+                        workingDir: 'dist/exam-ready',
                         acl: 'PublicRead'
                     )
                 }
