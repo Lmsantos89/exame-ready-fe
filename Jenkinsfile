@@ -36,15 +36,23 @@ pipeline {
 version: 1
 frontend:
   phases:
+    preBuild:
+      commands:
+        - echo "No build needed - using pre-built artifacts"
     build:
       commands:
         - echo "Skip build"
   artifacts:
-    baseDirectory: /
+    baseDirectory: .
     files:
       - '**/*'
+  cache:
+    paths: []
 EOL
                 '''
+                
+                // Debug the build output structure
+                sh 'find dist -type f | sort'
                 
                 // Add amplify.yml to the build directory
                 sh 'cp amplify.yml dist/exam-ready/'
