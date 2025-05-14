@@ -37,16 +37,14 @@ pipeline {
 region = ${AWS_REGION}
 EOL
                     
-                    # Deploy using Amplify CLI
-                    amplify push \
+                    # Initialize Amplify project
+                    amplify init \
                       --appId ${AMPLIFY_APP_ID} \
                       --envName ${BRANCH_NAME} \
                       --yes
-                      
-                    # Publish the frontend
+                    
+                    # Publish the frontend directly
                     amplify publish \
-                      --appId ${AMPLIFY_APP_ID} \
-                      --envName ${BRANCH_NAME} \
                       --yes \
                       --distributionDir dist/exam-ready
                     '''
