@@ -2,9 +2,11 @@ pipeline {
     agent any
     
     environment {
-        // Change these variables according to your setup
-        S3_BUCKET = 'exam-ready-frontend-staging'
         AWS_REGION = 'eu-central-1'
+        AMPLIFY_APP_ID = 'dbkvrj2plpji0' 
+        BRANCH_NAME = 'staging'
+        S3_BUCKET = 'exam-ready-frontend-staging-builds'
+        BUILD_ZIP = "exam-ready-${BUILD_NUMBER}.zip"
     }
     
     stages {
@@ -22,37 +24,42 @@ pipeline {
         
         stage('Build') {
             steps {
-                // Build for staging environment
-                sh 'npm run build -- --configuration=staging --verbose'
+                sh 'npm run build -- --configuration=staging'
             }
         }
         
-        stage('Deploy to S3') {
+        stage('Package') {
             steps {
-                // Configure AWS credentials
+                sh 'cd dist/exam-ready && zip -r ../../${BUILD_ZIP} .'
+            }
+        }
+        
+        stage('Upload to S3') {
+            steps {
                 withAWS(region: env.AWS_REGION, credentials: 'jenkins-deployment-user') {
-                    // List build directory contents for debugging
-                    sh 'find dist -type f | sort'
-                    
-                    // Sync the build directory with the S3 bucket
                     s3Upload(
                         bucket: env.S3_BUCKET,
-                        path: '/',
-                        includePathPattern: '**/*',
-                        workingDir: 'dist/exam-ready',
-                        acl: 'PublicRead'
+                        path: "${BUILD_ZIP}",
+                        file: "${BUILD_ZIP}"
                     )
                 }
             }
         }
-    }
-    
-    post {
-        success {
-            echo 'Deployment successful!'
-        }
-        failure {
-            echo 'Deployment failed!'
+        
+        stage('Deploy to Amplify') {
+            steps {
+                withAWS(region: env.AWS_REGION, credentials: 'jenkins-deployment-user') {
+                    sh '''
+                    S3_URL="s3://${S3_BUCKET}/${BUILD_ZIP}"
+                    echo "Deploying from $S3_URL"
+                    
+                    aws amplify start-deployment \
+                      --app-id ${AMPLIFY_APP_ID} \
+                      --branch-name ${BRANCH_NAME} \
+                      --source-url $S3_URL
+                    '''
+                }
+            }
         }
     }
 }
