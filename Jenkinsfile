@@ -26,12 +26,6 @@ pipeline {
             }
         }
         
-        stage('Install Amplify CLI') {
-            steps {
-                sh 'npm install -g @aws-amplify/cli'
-            }
-        }
-        
         stage('Deploy to Amplify') {
             steps {
                 withAWS(region: env.AWS_REGION, credentials: 'jenkins-deployment-user') {
