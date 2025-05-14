@@ -30,6 +30,26 @@ pipeline {
         
         stage('Package') {
             steps {
+                // Create amplify.yml file
+                sh '''
+                cat > amplify.yml << 'EOL'
+version: 1
+frontend:
+  phases:
+    build:
+      commands:
+        - echo "Skip build"
+  artifacts:
+    baseDirectory: /
+    files:
+      - '**/*'
+EOL
+                '''
+                
+                // Add amplify.yml to the build directory
+                sh 'cp amplify.yml dist/exam-ready/'
+                
+                // Create zip with all files
                 sh 'cd dist/exam-ready && zip -r ../../${BUILD_ZIP} .'
             }
         }
